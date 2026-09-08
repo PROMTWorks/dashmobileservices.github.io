@@ -1,7 +1,7 @@
 /* Final bootstrap for the DASH 13-module training workflow. */
 (function(){
 'use strict';
-var DB_URL='https://roywoofgypiyoobdcrwx.supabase.co',DB_KEY='sb_publishable_5SKEbO1wFS4LVZ6IcpWfnA_UQffaKX_';
+var DB_URL='https://roywoofgypiyoobdcrwx.supabase.co',DB_KEY='sb_publishable_5SKEbO1wFS4LVZ6IcpWfnA_UQffaKX_',tries=0;
 try{window.c=supabase.createClient(DB_URL,DB_KEY,{auth:{persistSession:true,autoRefreshToken:true}});}catch(e){console.warn(e);}
 function setupIdentity(){if(!window.c)return;window.c.auth.getSession().then(function(r){var uid=r.data&&r.data.session&&r.data.session.user&&r.data.session.user.id;if(uid)window.employee={auth_user_id:uid};});}
 function house(){return {title:'House Cleaning',material:'House Cleaning covers booked rooms and areas, customer property and privacy, professional conduct, access information, accidental damage, confidentiality, and handling difficult customer situations.',qs:[
@@ -40,22 +40,16 @@ function masterQuestions(){return [
 ['A friend asks what valuables you have seen in customer homes. What should you do?',['Share only general descriptions','Explain that customer information and observations are confidential and cannot be shared for personal reasons','Tell the friend about past customers only','Show photographs without names'],1],
 ['You forget a customer access code. What should you do?',['Guess the code','Use the authorized communication process or management and do not search private belongings or share the code unnecessarily','Look through drawers for it','Ask a friend to help'],1]
 ];}
-function finalAlign(){
- try{
-  if(typeof core==='undefined'||typeof master==='undefined'||!Array.isArray(core))return false;
-  /* Remove legacy separate service modules by title, regardless of their current index. */
-  for(var i=core.length-1;i>=0;i--)if(['Moving Services','Trash & Junk Removal','Garage Cleaning','Home & Property Cleaning'].indexOf(core[i].title)>=0)core.splice(i,1);
-  var existing=core.find(function(x){return x.title==='House Cleaning';});if(!existing)core.push(house());else existing.qs=house().qs;master.title='Master Test';master.material='25-question Master Test covering all 13 required DASH training modules. Questions are intentionally mixed rather than grouped by module. Employees must score 80% or higher to pass.';master.qs=masterQuestions();
-  window.DASH_REQUIRED_MODULE_COUNT=13;window.DASH_MODULE_PASS_PERCENT=80;window.DASH_MASTER_PASS_PERCENT=80;window.__DASH_FINAL_13_READY=true;
-  if(window.trainingRecord)window.passedName=function(name){var r=window.trainingRecord(name);return !!(r&&['passed','completed'].includes(String(r.status||'').toLowerCase()));};
-  if(typeof window.render==='function')window.render();
-  return true;
- }catch(e){console.warn('DASH final alignment',e);return false;}
-}
-function signoffs(){
- if(!window.c)return;
- window.c.auth.getSession().then(function(s){var uid=s.data&&s.data.session&&s.data.session.user&&s.data.session.user.id;if(!uid)return window.c.from('employee_profiles').select('id').eq('auth_user_id',uid).maybeSingle();}).then(function(r){if(r&&r.data)return window.c.from('employee_training_signoffs').select('signoff_stage,status,signed_at').eq('employee_id',r.data.id);}).then(function(r){if(r&&r.data){window.__DASH_SIGNOFFS=r.data;if(window.render)window.render();}});
-}
+function finalAlign(){try{
+ if(typeof core==='undefined'||typeof master==='undefined'||!Array.isArray(core))return false;
+ for(var i=core.length-1;i>=0;i--)if(['Moving Services','Trash & Junk Removal','Garage Cleaning','Home & Property Cleaning'].indexOf(core[i].title)>=0)core.splice(i,1);
+ var existing=core.find(function(x){return x.title==='House Cleaning';});if(!existing)core.push(house());else existing.qs=house().qs;
+ master.title='Master Test';master.material='25-question Master Test covering all 13 required DASH training modules. Questions are intentionally mixed rather than grouped by module. Employees must score 80% or higher to pass.';master.qs=masterQuestions();
+ window.DASH_REQUIRED_MODULE_COUNT=13;window.DASH_MODULE_PASS_PERCENT=80;window.DASH_MASTER_PASS_PERCENT=80;window.__DASH_FINAL_13_READY=true;
+ if(window.trainingRecord)window.passedName=function(name){var r=window.trainingRecord(name);return !!(r&&['passed','completed'].includes(String(r.status||'').toLowerCase()));};
+ if(typeof window.render==='function')window.render();return true;
+}catch(e){console.warn('DASH final alignment',e);return false;}}
+function signoffs(){if(!window.c)return;window.c.auth.getSession().then(function(s){var uid=s.data&&s.data.session&&s.data.session.user&&s.data.session.user.id;if(!uid)return null;return window.c.from('employee_profiles').select('id').eq('auth_user_id',uid).maybeSingle();}).then(function(r){if(r&&r.data)return window.c.from('employee_training_signoffs').select('signoff_stage,status,signed_at').eq('employee_id',r.data.id);}).then(function(r){if(r&&r.data){window.__DASH_SIGNOFFS=r.data;if(window.render)window.render();}});}
 setupIdentity();
-var t=setInterval(function(){if(window.__DASH_SERVICES_LOADED||window.__DASH_MASTER_TEST_LOADED||tries++>80){if(finalAlign()){clearInterval(t);signoffs();}}},250);
+var t=setInterval(function(){tries++;if((window.__DASH_SERVICES_LOADED||window.__DASH_MASTER_TEST_LOADED||tries>80)&&finalAlign()){clearInterval(t);signoffs();}},250);
 })();
