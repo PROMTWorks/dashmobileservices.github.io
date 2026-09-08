@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'employee-training-curriculum-13.js'
+      - 'employee-training-curriculum-13-bootstrap.js'
 permissions:
   contents: write
 jobs:
@@ -13,16 +14,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Add curriculum script to employee training center
+      - name: Add curriculum scripts to employee training center
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
           p=Path('employee-training-center.html')
           s=p.read_text()
-          tag='<!-- FINAL-13-CURRICULUM --><script src="employee-training-curriculum-13.js?v=20260908v1"></script>'
+          tag='<!-- FINAL-13-CURRICULUM --><script src="employee-training-curriculum-13.js?v=20260908v1"></script><script src="employee-training-curriculum-13-bootstrap.js?v=20260908v1"></script>'
+          old='<!-- FINAL-13-CURRICULUM --><script src="employee-training-curriculum-13.js?v=20260908v1"></script>'
           if tag not in s:
-              s=s.replace('</body>', tag+'</body>')
+              if old in s:
+                  s=s.replace(old,tag)
+              else:
+                  s=s.replace('</body>',tag+'</body>')
               p.write_text(s)
           PY
       - name: Commit portal wiring
