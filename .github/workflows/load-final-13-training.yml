@@ -1,0 +1,34 @@
+name: Load final 13-module training alignment
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'employee-training-curriculum-13.js'
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add curriculum script to employee training center
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('employee-training-center.html')
+          s=p.read_text()
+          tag='<!-- FINAL-13-CURRICULUM --><script src="employee-training-curriculum-13.js?v=20260908v1"></script>'
+          if tag not in s:
+              s=s.replace('</body>', tag+'</body>')
+              p.write_text(s)
+          PY
+      - name: Commit portal wiring
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add employee-training-center.html
+          git diff --cached --quiet || git commit -m 'Wire final 13-module training workflow'
+          git push
