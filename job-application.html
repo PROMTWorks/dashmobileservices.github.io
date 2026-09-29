@@ -50,7 +50,45 @@ footer{background:#0b1220;color:#fff}.foot{max-width:1200px;margin:auto;padding:
 <div class="field"><label for="position">Are you willing to work in various "Service Types?" *</label><select id="position" name="position" required><option value="">Select one</option><option>Yes</option><option>No</option></select></div>
 <div class="field"><label for="availability">Are you available to work at least 35 hours each week? *</label><select id="availability" name="availability" required><option value="">Select one</option><option>Yes</option><option>No</option></select></div>
 <div class="field"><label for="start">Earliest Start Date *</label><input id="start" name="start" type="date" required></div>
-<div class="field full"><label for="experience">Work Experience & Skills *</label><textarea id="experience" name="experience" placeholder="Tell us about your previous work experience, skills, certifications, or services you know how to perform." required></textarea></div>
+<div class="field full"><h2 style="margin-top:10px">Previous Work Experience</h2><p>Please provide information for up to three previous employers.</p></div>
+
+<div class="field full"><h3>Employer 1</h3></div>
+<div class="field"><label for="employer1_city">City</label><input id="employer1_city" name="employer1_city" type="text"></div>
+<div class="field"><label for="employer1_state">State</label><input id="employer1_state" name="employer1_state" type="text"></div>
+<div class="field"><label for="employer1_name">Employer Name</label><input id="employer1_name" name="employer1_name" type="text"></div>
+<div class="field"><label for="employer1_phone">Phone Number</label><input id="employer1_phone" name="employer1_phone" type="tel"></div>
+<div class="field"><label for="employer1_supervisor">Supervisor</label><input id="employer1_supervisor" name="employer1_supervisor" type="text"></div>
+<div class="field"><label for="employer1_start_title">Starting Work Title</label><input id="employer1_start_title" name="employer1_start_title" type="text"></div>
+<div class="field"><label for="employer1_end_title">Ending Working Title</label><input id="employer1_end_title" name="employer1_end_title" type="text"></div>
+<div class="field"><label for="employer1_start_date">Start Date</label><input id="employer1_start_date" name="employer1_start_date" type="date"></div>
+<div class="field"><label for="employer1_end_date">End Date</label><input id="employer1_end_date" name="employer1_end_date" type="date"></div>
+<div class="field full"><label for="employer1_reason">Reason for Leaving</label><textarea id="employer1_reason" name="employer1_reason"></textarea></div>
+
+<div class="field full"><h3>Employer 2</h3></div>
+<div class="field"><label for="employer2_city">City</label><input id="employer2_city" name="employer2_city" type="text"></div>
+<div class="field"><label for="employer2_state">State</label><input id="employer2_state" name="employer2_state" type="text"></div>
+<div class="field"><label for="employer2_name">Employer Name</label><input id="employer2_name" name="employer2_name" type="text"></div>
+<div class="field"><label for="employer2_phone">Phone Number</label><input id="employer2_phone" name="employer2_phone" type="tel"></div>
+<div class="field"><label for="employer2_supervisor">Supervisor</label><input id="employer2_supervisor" name="employer2_supervisor" type="text"></div>
+<div class="field"><label for="employer2_start_title">Starting Work Title</label><input id="employer2_start_title" name="employer2_start_title" type="text"></div>
+<div class="field"><label for="employer2_end_title">Ending Working Title</label><input id="employer2_end_title" name="employer2_end_title" type="text"></div>
+<div class="field"><label for="employer2_start_date">Start Date</label><input id="employer2_start_date" name="employer2_start_date" type="date"></div>
+<div class="field"><label for="employer2_end_date">End Date</label><input id="employer2_end_date" name="employer2_end_date" type="date"></div>
+<div class="field full"><label for="employer2_reason">Reason for Leaving</label><textarea id="employer2_reason" name="employer2_reason"></textarea></div>
+
+<div class="field full"><h3>Employer 3</h3></div>
+<div class="field"><label for="employer3_city">City</label><input id="employer3_city" name="employer3_city" type="text"></div>
+<div class="field"><label for="employer3_state">State</label><input id="employer3_state" name="employer3_state" type="text"></div>
+<div class="field"><label for="employer3_name">Employer Name</label><input id="employer3_name" name="employer3_name" type="text"></div>
+<div class="field"><label for="employer3_phone">Phone Number</label><input id="employer3_phone" name="employer3_phone" type="tel"></div>
+<div class="field"><label for="employer3_supervisor">Supervisor</label><input id="employer3_supervisor" name="employer3_supervisor" type="text"></div>
+<div class="field"><label for="employer3_start_title">Starting Work Title</label><input id="employer3_start_title" name="employer3_start_title" type="text"></div>
+<div class="field"><label for="employer3_end_title">Ending Working Title</label><input id="employer3_end_title" name="employer3_end_title" type="text"></div>
+<div class="field"><label for="employer3_start_date">Start Date</label><input id="employer3_start_date" name="employer3_start_date" type="date"></div>
+<div class="field"><label for="employer3_end_date">End Date</label><input id="employer3_end_date" name="employer3_end_date" type="date"></div>
+<div class="field full"><label for="employer3_reason">Reason for Leaving</label><textarea id="employer3_reason" name="employer3_reason"></textarea></div>
+
+<div class="field full"><label for="skills">Skills *</label><textarea id="skills" name="skills" placeholder="Tell us about your skills, certifications, equipment experience, or services you know how to perform." required></textarea></div>
 <div class="field full"><label for="why">Why would you like to work for DASH MOBILE SERVICES? *</label><textarea id="why" name="why" required></textarea></div>
 <div class="field full"><label for="additional">Anything Else You Would Like Us to Know</label><textarea id="additional" name="additional"></textarea></div>
 <div class="field full">
@@ -77,12 +115,48 @@ const body=[
 "Full Name: "+f.get("name"),
 "Phone: "+f.get("phone"),
 "Email: "+f.get("email"),
-"Position / Type of Work: "+f.get("position"),
-"Weekly Availability: "+f.get("availability"),
+"Willing to Work in Various Service Types: "+f.get("position"),
+"Available to Work at Least 35 Hours Each Week: "+f.get("availability"),
 "Earliest Start Date: "+f.get("start"),
 "",
-"Work Experience & Skills:",
-f.get("experience"),
+"PREVIOUS WORK EXPERIENCE — EMPLOYER 1:",
+"City: "+f.get("employer1_city"),
+"State: "+f.get("employer1_state"),
+"Employer Name: "+f.get("employer1_name"),
+"Phone Number: "+f.get("employer1_phone"),
+"Supervisor: "+f.get("employer1_supervisor"),
+"Starting Work Title: "+f.get("employer1_start_title"),
+"Ending Working Title: "+f.get("employer1_end_title"),
+"Start Date: "+f.get("employer1_start_date"),
+"End Date: "+f.get("employer1_end_date"),
+"Reason for Leaving: "+f.get("employer1_reason"),
+"",
+"PREVIOUS WORK EXPERIENCE — EMPLOYER 2:",
+"City: "+f.get("employer2_city"),
+"State: "+f.get("employer2_state"),
+"Employer Name: "+f.get("employer2_name"),
+"Phone Number: "+f.get("employer2_phone"),
+"Supervisor: "+f.get("employer2_supervisor"),
+"Starting Work Title: "+f.get("employer2_start_title"),
+"Ending Working Title: "+f.get("employer2_end_title"),
+"Start Date: "+f.get("employer2_start_date"),
+"End Date: "+f.get("employer2_end_date"),
+"Reason for Leaving: "+f.get("employer2_reason"),
+"",
+"PREVIOUS WORK EXPERIENCE — EMPLOYER 3:",
+"City: "+f.get("employer3_city"),
+"State: "+f.get("employer3_state"),
+"Employer Name: "+f.get("employer3_name"),
+"Phone Number: "+f.get("employer3_phone"),
+"Supervisor: "+f.get("employer3_supervisor"),
+"Starting Work Title: "+f.get("employer3_start_title"),
+"Ending Working Title: "+f.get("employer3_end_title"),
+"Start Date: "+f.get("employer3_start_date"),
+"End Date: "+f.get("employer3_end_date"),
+"Reason for Leaving: "+f.get("employer3_reason"),
+"",
+"SKILLS:",
+f.get("skills"),
 "",
 "Why would you like to work for DASH MOBILE SERVICES?",
 f.get("why"),
