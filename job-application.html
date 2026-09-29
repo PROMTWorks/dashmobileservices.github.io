@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DASH MOBILE SERVICES | Employment Application</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#c62828;--red-dark:#a51f1f;--ink:#111827;--muted:#475569;--line:#e2e8f0;--soft:#f6f8fb}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--soft);color:#17202a;line-height:1.65}
+a{text-decoration:none;color:inherit}
+header{background:var(--ink);color:#fff}.nav{max-width:1200px;margin:auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.brand{font-size:24px;font-weight:900;letter-spacing:3px}.brand small{display:block;font-size:9px;color:#aeb9c8}
+.navlinks{display:flex;gap:18px;flex-wrap:wrap}.navlinks a{font-size:13px;font-weight:700}
+.hero{background:#fff;border-bottom:1px solid var(--line)}.hero-inner{max-width:1000px;margin:auto;padding:62px 24px 48px}
+.eyebrow{color:var(--red);font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:44px;line-height:1.12;margin:8px 0 14px;color:var(--ink)}.lead{font-size:18px;color:var(--muted);max-width:760px}
+.wrap{max-width:900px;margin:auto;padding:36px 24px 70px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 3px 12px rgba(15,23,42,.04);margin-bottom:20px}
+.card h2{font-size:22px;color:var(--ink);margin-bottom:10px}.card p{color:var(--muted);font-size:14px;margin-bottom:12px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
+label{font-size:13px;font-weight:800;color:var(--ink)}input,select,textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:12px 13px;font:inherit;font-size:14px;background:#fff;color:#17202a}textarea{min-height:120px;resize:vertical}
+.check{display:flex;align-items:flex-start;gap:10px;margin-top:6px}.check input{width:auto;margin-top:5px}.check label{font-weight:600;color:var(--muted)}
+.button{display:inline-block;border:0;background:var(--red);color:#fff;padding:13px 20px;border-radius:9px;font-weight:800;font-size:14px;cursor:pointer}.button:hover{background:var(--red-dark)}
+.note{background:#111827;color:#fff;border-radius:12px;padding:20px;margin-top:18px}.note p{color:#dbe4ef;margin:0}.contact{color:var(--red);font-weight:800}
+.back{display:inline-block;color:var(--red);font-weight:800;margin-top:8px}
+footer{background:#0b1220;color:#fff}.foot{max-width:1200px;margin:auto;padding:30px 24px}.links{display:flex;gap:20px;flex-wrap:wrap}.links a{color:#cbd5e1;font-size:12px}.legal{border-top:1px solid #1f2937;margin-top:20px;padding-top:15px;color:#7f8ea3;font-size:11px}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}h1{font-size:36px}.nav{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+<a class="brand" href="index.html">DASH<small>SERVICES</small></a>
+<nav class="navlinks"><a href="all-services.html">ALL SERVICES</a><a href="our-company.html">OUR COMPANY</a><a href="help.html">HELP</a><a href="careers.html">CAREERS</a></nav>
+</div></header>
+
+<section class="hero"><div class="hero-inner">
+<div class="eyebrow">DASH MOBILE SERVICES</div>
+<h1>Employment Application</h1>
+<p class="lead">Thank you for your interest in joining DASH MOBILE SERVICES. Complete the application below with accurate information and tell us how you could contribute to the team.</p>
+</div></section>
+
+<main class="wrap">
+<section class="card">
+<h2>Applicant Information</h2>
+<form id="applicationForm">
+<div class="form-grid">
+<div class="field"><label for="name">Full Name *</label><input id="name" name="name" type="text" required></div>
+<div class="field"><label for="phone">Phone Number *</label><input id="phone" name="phone" type="tel" required></div>
+<div class="field"><label for="email">Email Address *</label><input id="email" name="email" type="email" required></div>
+<div class="field"><label for="position">Position / Type of Work *</label><input id="position" name="position" type="text" placeholder="Example: Service Technician, Cleaning, Lawn Care" required></div>
+<div class="field"><label for="availability">Weekly Availability *</label><select id="availability" name="availability" required><option value="">Select one</option><option>30–39 hours per week</option><option>40+ hours per week</option><option>Part-time / less than 30 hours</option></select></div>
+<div class="field"><label for="start">Earliest Start Date *</label><input id="start" name="start" type="date" required></div>
+<div class="field full"><label for="experience">Work Experience & Skills *</label><textarea id="experience" name="experience" placeholder="Tell us about your previous work experience, skills, certifications, or services you know how to perform." required></textarea></div>
+<div class="field full"><label for="why">Why would you like to work for DASH MOBILE SERVICES? *</label><textarea id="why" name="why" required></textarea></div>
+<div class="field full"><label for="additional">Anything Else You Would Like Us to Know</label><textarea id="additional" name="additional"></textarea></div>
+<div class="field full">
+<div class="check"><input id="understand" type="checkbox" required><label for="understand">I understand that submitting this application does not guarantee employment and that DASH MOBILE SERVICES may contact me for additional information or an interview.</label></div>
+</div>
+<div class="field full"><button class="button" type="submit">Submit Application</button></div>
+</div>
+</form>
+<div class="note"><p><strong>Application submission:</strong> When you select Submit Application, your device will open its email application with your completed application prepared for DASH MOBILE SERVICES. Please review the message and send it to <a class="contact" href="mailto:supportdashservices@gmail.com">supportdashservices@gmail.com</a>.</p></div>
+</section>
+
+<a class="back" href="careers.html">← Back to Careers</a>
+</main>
+
+<footer><div class="foot"><div class="links"><a href="all-services.html">All Services</a><a href="careers.html">Careers</a><a href="our-company.html">Our Company</a><a href="help.html">Help</a><a href="accessibility.html">Accessibility</a><a href="terms-of-use.html">Terms of Use</a><a href="privacy-notice.html">Privacy Notice</a></div><div class="legal">DASH MOBILE SERVICES is the public-facing brand of PROMTWORKS.</div></div></footer>
+
+<script>
+document.getElementById("applicationForm").addEventListener("submit",function(e){
+e.preventDefault();
+const f=new FormData(this);
+const body=[
+"DASH MOBILE SERVICES — EMPLOYMENT APPLICATION",
+"",
+"Full Name: "+f.get("name"),
+"Phone: "+f.get("phone"),
+"Email: "+f.get("email"),
+"Position / Type of Work: "+f.get("position"),
+"Weekly Availability: "+f.get("availability"),
+"Earliest Start Date: "+f.get("start"),
+"",
+"Work Experience & Skills:",
+f.get("experience"),
+"",
+"Why would you like to work for DASH MOBILE SERVICES?",
+f.get("why"),
+"",
+"Additional Information:",
+f.get("additional")||"None"
+].join("\n");
+window.location.href="mailto:supportdashservices@gmail.com?subject="+encodeURIComponent("DASH Employment Application — "+f.get("name"))+"&body="+encodeURIComponent(body);
+});
+</script>
+</body>
+</html>
