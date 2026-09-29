@@ -97,7 +97,7 @@ footer{background:#0b1220;color:#fff}.foot{max-width:1200px;margin:auto;padding:
 <div class="field full"><button class="button" type="submit">Submit Application</button></div>
 </div>
 </form>
-<div class="note"><p><strong>Application submission:</strong> When you select Submit Application, your device will open its email application with your completed application prepared for DASH MOBILE SERVICES. Please review the message and send it to <a class="contact" href="mailto:supportdashservices@gmail.com">supportdashservices@gmail.com</a>.</p></div>
+<div class="note"><p><strong>Application submission:</strong> Your completed application will be securely submitted to DASH MOBILE SERVICES and made available to the authorized Super Admin in the DASH Admin Portal. You will not need to open an email application or send the application manually.</p></div>
 </section>
 
 <a class="back" href="careers.html">← Back to Careers</a>
@@ -165,6 +165,68 @@ f.get("why"),
 f.get("additional")||"None"
 ].join("\n");
 window.location.href="mailto:supportdashservices@gmail.com?subject="+encodeURIComponent("DASH Employment Application — "+f.get("name"))+"&body="+encodeURIComponent(body);
+});
+</script>
+</body>
+</html<script>
+document.getElementById("applicationForm").addEventListener("submit",async function(e){
+e.preventDefault();
+const form=this;
+const button=form.querySelector('button[type="submit"]');
+button.disabled=true;
+button.textContent="Submitting…";
+const f=new FormData(form);
+const payload={
+full_name:f.get("name"),
+phone:f.get("phone"),
+email:f.get("email"),
+willing_service_types:f.get("position"),
+available_35_hours:f.get("availability"),
+earliest_start_date:f.get("start"),
+skills:f.get("skills"),
+why_dash:f.get("why"),
+additional_information:f.get("additional")||"",
+employer1_city:f.get("employer1_city")||"",
+employer1_state:f.get("employer1_state")||"",
+employer1_name:f.get("employer1_name")||"",
+employer1_phone:f.get("employer1_phone")||"",
+employer1_supervisor:f.get("employer1_supervisor")||"",
+employer1_start_title:f.get("employer1_start_title")||"",
+employer1_end_title:f.get("employer1_end_title")||"",
+employer1_start_date:f.get("employer1_start_date")||"",
+employer1_end_date:f.get("employer1_end_date")||"",
+employer1_reason:f.get("employer1_reason")||"",
+employer2_city:f.get("employer2_city")||"",
+employer2_state:f.get("employer2_state")||"",
+employer2_name:f.get("employer2_name")||"",
+employer2_phone:f.get("employer2_phone")||"",
+employer2_supervisor:f.get("employer2_supervisor")||"",
+employer2_start_title:f.get("employer2_start_title")||"",
+employer2_end_title:f.get("employer2_end_title")||"",
+employer2_start_date:f.get("employer2_start_date")||"",
+employer2_end_date:f.get("employer2_end_date")||"",
+employer2_reason:f.get("employer2_reason")||"",
+employer3_city:f.get("employer3_city")||"",
+employer3_state:f.get("employer3_state")||"",
+employer3_name:f.get("employer3_name")||"",
+employer3_phone:f.get("employer3_phone")||"",
+employer3_supervisor:f.get("employer3_supervisor")||"",
+employer3_start_title:f.get("employer3_start_title")||"",
+employer3_end_title:f.get("employer3_end_title")||"",
+employer3_start_date:f.get("employer3_start_date")||"",
+employer3_end_date:f.get("employer3_end_date")||"",
+employer3_reason:f.get("employer3_reason")||""
+};
+try{
+const res=await fetch("https://roywoofgypiyoobdcrwx.supabase.co/functions/v1/dash-job-application-submit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+const result=await res.json().catch(()=>({}));
+if(!res.ok)throw new Error(result.error||"Unable to submit your application.");
+form.innerHTML='<div class="note" style="background:#166534"><p><strong>Application Submitted Successfully.</strong> Thank you for your interest in joining DASH MOBILE SERVICES. Your application has been received and is now available for review by the authorized Super Admin.</p></div>';
+}catch(err){
+alert(err.message||"Unable to submit your application. Please try again.");
+button.disabled=false;
+button.textContent="Submit Application";
+}
 });
 </script>
 </body>
