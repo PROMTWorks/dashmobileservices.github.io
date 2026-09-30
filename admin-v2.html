@@ -14,7 +14,7 @@ const SUPABASE_PUBLISHABLE_KEY='sb_publishable_5SKEbO1wFS4LVZ6IcpWfnA_UQffaKX_';
 const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 const status=document.getElementById('status'),errorBox=document.getElementById('error'),spinner=document.getElementById('spinner'),login=document.getElementById('login');
 function fail(message){spinner.style.display='none';status.textContent='Unable to open admin portal.';errorBox.textContent=message||'Please sign in again.';errorBox.style.display='block';login.style.display='inline-block'}
-(async()=>{try{const {data,error}=await client.auth.getSession();if(error)throw error;if(!data?.session){location.replace('admin-login.html');return}status.textContent='Session found. Opening DASH MOBILE SERVICES Admin Portal...';location.replace('admin-shell-clean.html')}catch(e){fail(e?.message)}})();
+(async()=>{try{const {data,error}=await client.auth.getSession();if(error)throw error;if(!data?.session){location.replace('admin-login.html');return}status.textContent='Session found. Opening DASH MOBILE SERVICES Admin Portal...';location.replace('admin-shell-clean.html?v=20260929-partnership-buyin')}catch(e){fail(e?.message)}})();
 </script>
 <script src="admin-role-guard.js?v=20260821-3"></script>
 <script src="admin-portal-tools.js?v=20260904-1"></script>
