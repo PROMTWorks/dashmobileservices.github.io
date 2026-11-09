@@ -63,6 +63,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     return details;
   }
 
+  window.DASH_COLLECT_SERVICE_DETAILS = selectedServiceDetails;
+
   function readProofFile(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
