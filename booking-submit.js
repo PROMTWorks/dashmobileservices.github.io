@@ -19,6 +19,11 @@ function choices(){return Array.from(document.querySelectorAll('input[name="spec
 function estimate(service){
  let item=LAWN[service]||AUTO[service]; if(!item)return null;
  let materials=item.materials===undefined?item.parts:item.materials, minutes=item.minutes;
+ if(service==='lawn-mowing'){
+  const size=document.getElementById('lawnSize')?.value||'medium';
+  const lawnMinutes={small:45,medium:60,large:90,xlarge:120};
+  minutes=lawnMinutes[size]||60;
+ }
  const c=choices();
  if(service==='wipers'){const n=c.includes('All wipers')?4:Math.max(c.length,1);materials=35*n;minutes=20*n}
  if(service==='tire-replacement'){const n=parseInt((c[0]||'1').match(/\d+/)?.[0]||'1',10);materials=125*n;minutes=45*n}
