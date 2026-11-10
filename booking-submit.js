@@ -31,7 +31,11 @@ function estimate(service){
  if(service==='fluid')materials=15*Math.max(c.length,1);
  const hours=Math.max(minutes/60,.25);
  const internal=(COSTS.employeeHourly*(1+COSTS.employerBurdenRate)*hours)+materials+(COSTS.equipmentOverheadPerLaborHour*hours)+COSTS.businessOverheadPerJob+COSTS.travelBaseFee;
- const total=Math.max(internal+10,internal/(1-COSTS.targetProfitMargin));
+ let total=Math.max(internal+10,internal/(1-COSTS.targetProfitMargin));
+ if(service==='lawn-mowing'){
+  const lawnStartingPrices={small:45,medium:90,large:75,xlarge:100};
+  total=lawnStartingPrices[document.getElementById('lawnSize')?.value||'medium']||90;
+ }
  return {labor:total,parts:0,total:total,cost:internal,profit:total-internal,minutes:minutes};
 }
 window.DASH_PRICING={COSTS: COSTS,LAWN:LAWN,AUTO:AUTO,estimate:estimate};
