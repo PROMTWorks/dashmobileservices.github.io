@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>
+(function(){
+  var version=new URLSearchParams(window.location.search).get('v');
+  if(version==='20260816'){
+    window.location.replace('book-service.html?v=20261109v5'+window.location.hash);
+  }
+})();
+</script>
+
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>DASH MOBILE SERVICES | Book a Service</title>
 <style>
