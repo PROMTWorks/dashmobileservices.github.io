@@ -44,38 +44,39 @@
 <div class="contact" id="contact"><h2>Customer Contact Information</h2><p class="contact-intro">We need your contact information so DASH can communicate with you about this service request and the appointment confirmation.</p><div class="grid"><div class="field"><label for="firstName">First Name <span class="required">*</span></label><input id="firstName" autocomplete="given-name" placeholder="First name"></div><div class="field"><label for="lastName">Last Name <span class="required">*</span></label><input id="lastName" autocomplete="family-name" placeholder="Last name"></div><div class="field"><label for="phone">Phone Number <span class="required">*</span></label><input id="phone" type="tel" autocomplete="tel" placeholder="(555) 555-5555"></div><div class="field"><label for="email">Email Address <span class="required">*</span></label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"></div><div class="field full"><label for="contactPreference">Preferred Contact Method</label><select id="contactPreference"><option value="phone">Phone</option><option value="text">Text message</option><option value="email">Email</option></select></div></div><label class="contact-check"><input type="checkbox" id="consent"><span>I confirm that the contact information above is accurate and I authorize DASH MOBILE SERVICES to contact me regarding this service request and appointment. <span class="required">*</span></span></label><button class="continue" onclick="submitRequest()">Submit Service Request</button></div></section></main><footer>DASH MOBILE SERVICES is the public-facing brand of PROMTWORKS.</footer>
 <script>
 const serviceList=[['oil','Oil Change','Vehicle-specific mobile oil-change service.'],['wipers','Wiper Replacement','Choose the wiper(s) that need replacement.'],['battery','Battery Replacement','Mobile replacement of a compatible battery.'],['jump','Jump-Start Service','Basic mobile jump-start assistance.'],['tire','Tire Pressure Check & Inflation','Basic tire pressure and inflation service.'],['tire-replacement','Tire Replacement','Replace 1, 2, 3, or 4 compatible tires.'],['air','Engine Air Filter Replacement','New engine air filter installation.'],['cabin','Cabin Air Filter Replacement','New cabin air filter installation.'],['headlight','Headlight Assembly Replacement','One, two, or both headlights.'],['brake-light','Brake/Tail Light Assembly Replacement','One, two, or both lights.'],['fluid','Fluid Top-Off Service','Choose the routine fluid top-off needed.']];
-const pricing={oil:[39,0],wipers:[25,35],battery:[45,140],jump:[45,0],tire:[25,0],"tire-replacement":[35,500],air:[25,35],cabin:[25,35],headlight:[65,150],"brake-light":[45,80],fluid:[25,15]};
-services.innerHTML=serviceList.map(s=>`<div class="service"><strong>${s[1]}</strong><span>${s[2]}</span><button onclick="openBooking('${s[0]}')">Continue</button></div>`).join('');serviceList.forEach(s=>service.add(new Option(s[1],s[0])));for(let y=new Date().getFullYear()+1;y>=1980;y--)year.add(new Option(y,y));
+const pricing={oil:[39,0],wipers:[25,35],battery:[45,140],jump:[45,0],tire:[25,0],'tire-replacement':[35,500],air:[25,35],cabin:[25,35],headlight:[65,150],'brake-light':[45,80],fluid:[25,15]};
+serviceList.forEach(s=>services.innerHTML+=`<div class="service"><strong>${s[1]}</strong><span>${s[2]}</span><button type="button" onclick="openBooking('${s[0]}')">Continue</button></div>`);
+serviceList.forEach(s=>service.add(new Option(s[1],s[0])));
+for(let y=new Date().getFullYear()+1;y>=1980;y--)year.add(new Option(y,y));
 function value(id){const e=document.getElementById(id);return e?String(e.value||'').trim():''}
 function checkedChoices(){return [...document.querySelectorAll('input[name="specialChoice"]:checked')].map(x=>x.value)}
 function fullAddress(){return [value('locationStreet'),value('locationCity'),value('locationState'),value('locationZip')].filter(Boolean).join(', ').replace(/, ([A-Z]{2}),/,', $1 ')}
 function openBooking(s){automotive.classList.add('open');booking.classList.add('open');service.value=s;estimate.classList.remove('open');review.classList.remove('open');contact.classList.remove('open');setStep(2);updateSpecial();booking.scrollIntoView({behavior:'smooth'})}
-function setStep(n){for(let i=1;i<=5;i++)document.getElementById('p'+i).classList.toggle('active',i===n)}
+function setStep(n){for(let i=1;i<=5;i++){const p=document.getElementById('p'+i);if(p)p.classList.toggle('active',i===n)}}
 function updateSpecial(){const s=value('service');special.classList.add('hidden');specialOptions.innerHTML='';if(s==='wipers')show('Which wiper(s) need replacement?',['Driver-side','Passenger-side','Rear','All wipers'],'checkbox');if(s==='tire-replacement')show('How many tires need replacement?',['1 tire','2 tires','3 tires','4 tires'],'radio');if(s==='headlight')show('How many headlight assemblies?',['1 headlight','2 headlights'],'radio');if(s==='brake-light')show('How many brake/tail light assemblies?',['1 light','2 lights'],'radio');if(s==='fluid')show('Which fluid top-off?',['Engine oil','Coolant','Brake fluid','Transmission fluid','Windshield washer fluid'],'radio')}
 function show(label,opts,type){special.classList.remove('hidden');specialLabel.textContent=label;specialOptions.innerHTML=opts.map((o,i)=>`<label><input type="${type}" name="specialChoice" value="${o}" ${i===0?'checked':''}> ${o}</label>`).join('')}
-service.addEventListener('change',()=>{updateSpecial();if(value('service')!=='house-cleaning')setStep(2)})
-addressRestrictions.addEventListener('change',()=>{restrictionProofSection.classList.toggle('hidden',!['yes','unsure'].includes(value('addressRestrictions')))});
-function calculateEstimate(){const s=value('service');if(s==='house-cleaning'&&typeof window.calculateHouseCleaningEstimate==='function'){window.calculateHouseCleaningEstimate();return}const result=window.DASH_PRICING&&typeof window.DASH_PRICING.estimate==='function'?window.DASH_PRICING.estimate(s):null;if(!result){alert('Pricing is not available for this service. Please contact DASH before submitting.');return}laborPrice.textContent='
-function reviewBooking(){const details=window.DASH_COLLECT_SERVICE_DETAILS?window.DASH_COLLECT_SERVICE_DETAILS():{};const detailText=Object.values(details).map(d=>d&&d.label?d.label+': '+(d.values||[]).join(', '):'Selected options: '+(Array.isArray(d)?d.join(', '):'')).filter(Boolean).join('; ');reviewGrid.innerHTML=[['Service',service.options[service.selectedIndex]?.text||''],['Vehicle',`${value('year')} ${value('make')} ${value('model')}`.trim()],['Engine',value('engine')],['Trim',value('trim')],['Service Details',detailText],['Date',value('date')],['Time',value('time')],['Location',fullAddress()],['Estimated Total',value('totalPrice')]].map(x=>`<div><strong>${x[0]}</strong>${x[1]||'—'}</div>`).join('');review.classList.add('open');setStep(4);review.scrollIntoView({behavior:'smooth'})}
+service.addEventListener('change',()=>{updateSpecial();if(value('service')!=='house-cleaning')setStep(2)});
+addressRestrictions.addEventListener('change',()=>restrictionProofSection.classList.toggle('hidden',!['yes','unsure'].includes(value('addressRestrictions'))));
+function calculateEstimate(){
+ const s=value('service');
+ if(s==='house-cleaning'&&typeof window.calculateHouseCleaningEstimate==='function'){window.calculateHouseCleaningEstimate();return}
+ const result=window.DASH_PRICING&&typeof window.DASH_PRICING.estimate==='function'?window.DASH_PRICING.estimate(s):null;
+ if(!result){alert('Pricing is not available for this service. Please contact DASH before submitting.');return}
+ laborPrice.textContent='$'+Number(result.total||0).toFixed(2);
+ partsPrice.textContent='$0.00';
+ totalPrice.textContent='$'+Number(result.total||0).toFixed(2);
+ estimate.classList.add('open');setStep(3);estimate.scrollIntoView({behavior:'smooth'});
+}
+function reviewBooking(){
+ const rows=[['Service',service.options[service.selectedIndex]?.text||''],['Date',value('date')],['Time',value('time')],['Location',fullAddress()],['Estimated Total',value('totalPrice')]];
+ const details=window.DASH_COLLECT_SERVICE_DETAILS?window.DASH_COLLECT_SERVICE_DETAILS():{};
+ const detailText=Object.values(details).map(d=>d&&d.label?d.label+': '+(d.values||[]).join(', '):'').filter(Boolean).join('; ');
+ if(detailText)rows.splice(1,0,['Service Details',detailText]);
+ const grid=document.getElementById('reviewGrid');grid.innerHTML='';
+ rows.forEach(([label,val])=>{const cell=document.createElement('div');const strong=document.createElement('strong');strong.textContent=label;cell.appendChild(strong);cell.appendChild(document.createTextNode(val||'—'));grid.appendChild(cell)});
+ review.classList.add('open');setStep(4);review.scrollIntoView({behavior:'smooth'});
+}
 function showContact(){contact.classList.add('open');setStep(5);contact.scrollIntoView({behavior:'smooth'})}
-function submitRequest(){if(typeof window.submitServiceRequest==='function'){window.submitServiceRequest();return}alert('Booking submission is currently unavailable.');}
-</script>
-</body></html>
-+Number(result.labor||0).toFixed(2);partsPrice.textContent='
-function reviewBooking(){reviewGrid.innerHTML=[['Service',service.options[service.selectedIndex]?.text||''],['Vehicle',`${value('year')} ${value('make')} ${value('model')}`.trim()],['Engine',value('engine')],['Trim',value('trim')],['Date',value('date')],['Time',value('time')],['Location',fullAddress()],['Estimated Total',value('totalPrice')]].map(x=>`<div><strong>${x[0]}</strong>${x[1]||'—'}</div>`).join('');review.classList.add('open');setStep(4);review.scrollIntoView({behavior:'smooth'})}
-function showContact(){contact.classList.add('open');setStep(5);contact.scrollIntoView({behavior:'smooth'})}
-function submitRequest(){if(typeof window.submitServiceRequest==='function'){window.submitServiceRequest();return}alert('Booking submission is currently unavailable.');}
-</script>
-</body></html>
-+Number(result.parts||0).toFixed(2);totalPrice.textContent='
-function reviewBooking(){reviewGrid.innerHTML=[['Service',service.options[service.selectedIndex]?.text||''],['Vehicle',`${value('year')} ${value('make')} ${value('model')}`.trim()],['Engine',value('engine')],['Trim',value('trim')],['Date',value('date')],['Time',value('time')],['Location',fullAddress()],['Estimated Total',value('totalPrice')]].map(x=>`<div><strong>${x[0]}</strong>${x[1]||'—'}</div>`).join('');review.classList.add('open');setStep(4);review.scrollIntoView({behavior:'smooth'})}
-function showContact(){contact.classList.add('open');setStep(5);contact.scrollIntoView({behavior:'smooth'})}
-function submitRequest(){if(typeof window.submitServiceRequest==='function'){window.submitServiceRequest();return}alert('Booking submission is currently unavailable.');}
-</script>
-</body></html>
-+Number(result.total||0).toFixed(2);estimate.classList.add('open');setStep(3);estimate.scrollIntoView({behavior:'smooth'})}
-function reviewBooking(){reviewGrid.innerHTML=[['Service',service.options[service.selectedIndex]?.text||''],['Vehicle',`${value('year')} ${value('make')} ${value('model')}`.trim()],['Engine',value('engine')],['Trim',value('trim')],['Date',value('date')],['Time',value('time')],['Location',fullAddress()],['Estimated Total',value('totalPrice')]].map(x=>`<div><strong>${x[0]}</strong>${x[1]||'—'}</div>`).join('');review.classList.add('open');setStep(4);review.scrollIntoView({behavior:'smooth'})}
-function showContact(){contact.classList.add('open');setStep(5);contact.scrollIntoView({behavior:'smooth'})}
-function submitRequest(){if(typeof window.submitServiceRequest==='function'){window.submitServiceRequest();return}alert('Booking submission is currently unavailable.');}
+function submitRequest(){if(typeof window.submitServiceRequest==='function'){window.submitServiceRequest();return}alert('Booking submission is currently unavailable.')}
 </script>
 </body></html>
